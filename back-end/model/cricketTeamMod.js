@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('debug',true);
 
 const Schema = mongoose.Schema;
 // const playerSchema = new Schema([
@@ -23,7 +24,7 @@ const cricSchema = new Schema({
             type:String,
             required: [true,'teamName field is required!']
         },
-        player:[
+        player:
             {
                 name:{
                     type:String,
@@ -37,10 +38,10 @@ const cricSchema = new Schema({
                 runs:Number,
                 active:Boolean
             }
-        ]
+        
     }
 );   
 
-const model = mongoose.model('cricketTeamCol',cricSchema);
+const model = mongoose.model('cricketTeamCol', cricSchema);
 
 module.exports = model;

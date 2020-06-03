@@ -12,6 +12,7 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.json());
 app.use(require('./controller/routes/page1'));
 
+
 app.listen(4000,()=>{
     console.log("now listening to requests...");
 });
