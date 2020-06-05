@@ -3,7 +3,8 @@ const router = express.Router();
 
 const teams = require('../../model/cricketTeamMod'); 
 var selectedPlrs = [];
-var callplrs = []
+var finalTeam =[]; 
+var callplrs = []; count = 0;
 
 router.get('/team/getTeam/:teamId', (req,res,next)=>{// player[name].
     teams.findById(req.params.teamId,(err,data)=>{
@@ -16,16 +17,25 @@ router.get('/team/getTeam/:teamId', (req,res,next)=>{// player[name].
     });
 });
 
+function pickTeam(array){
+    if(count==0)
+        finalTeam = [{team1:array}];
+    else{
+        finalTeam.push({team2:array})
+    }    
+}
+
 router.put('/team/update', (req, res, next)=>{
-    var selectedPlrs = req.body.team;
-   selectedPlrs.map((item)=>{
+    selectedPlrs = req.body.team;
+    pickTeam(selectedPlrs);
+    selectedPlrs.map((item)=>{
 
     let filter = {players: {$elemMatch:{name: item.name}}}
-    let update = {"players.$.active":'false'}
+    let update = {"players.$.active":'true', "players.$.scored": 0}
     teams.findOneAndUpdate(filter,update,(err,data)=>{
-        res.send(data);
+        console.log("Player selected");
     })
-   }) 
+   }); res.send("Done");
 });
 
 //!! Only for back-end to initialise the team players through POSTMAN
@@ -65,4 +75,5 @@ router.post('/team/createTeam',(req,res,next)=>{
 });
 
 
-module.exports = router;
+module.exports = {router:router,
+finalTeam: finalTeam};
