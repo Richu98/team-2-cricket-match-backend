@@ -1,1 +1,1 @@
-web: node back-end/entryPoint.js
+web: node entryPoint.js
