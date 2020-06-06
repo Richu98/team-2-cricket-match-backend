@@ -10,7 +10,7 @@ var nextIn = false;
 
 router2.get('/bringTeam', (req,res,next)=>{
     total = 0;
-    res.send(finalTeam['team1']);
+    res.send(finalTeam);
 });
 
 var scored = 0;
@@ -70,19 +70,20 @@ function closeMatch(array){
         let filter = {players: {$elemMatch:{name: item.name}}}
         let update = {"players.$.active":'true'}
         teams.findOneAndUpdate(filter,update,(err,data)=>{
-            res.send(data);
+            console.log("Updated");
         });
     }); 
 }
+//total= 2; total1= 3; 
+
+
 
 router2.put('/endMatch',(req,res,next)=>{
+    console.log(finalTeam[1]);
     var total2 = total;
-    closeMatch(finalTeam.team1);
-    closeMatch(finalTeam.team2);
-    res.send({team1Score: total1, team1Score: total2})
+    closeMatch(finalTeam[0]);
+    closeMatch(finalTeam[1]);
+    res.send({team1Score: total1, team2Score: total2})
 });
-
-router2.get('/random',(req,res,next)=>{
-    console.log(random());
-});   
+  
 module.exports = router2;

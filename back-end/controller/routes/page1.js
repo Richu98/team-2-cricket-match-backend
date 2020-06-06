@@ -5,6 +5,7 @@ const teams = require('../../model/cricketTeamMod');
 var selectedPlrs = [];
 var finalTeam =[]; 
 var callplrs = []; count = 0;
+    
 
 router.get('/team/getTeam/:teamId', (req,res,next)=>{// player[name].
     teams.findById(req.params.teamId,(err,data)=>{
@@ -18,10 +19,12 @@ router.get('/team/getTeam/:teamId', (req,res,next)=>{// player[name].
 });
 
 function pickTeam(array){
-    if(count==0)
-        finalTeam = [{team1:array}];
-    else{
-        finalTeam.push({team2:array})
+    if(count==0){
+        finalTeam = [{array}];
+        count = 1;
+    }else{
+        finalTeam.push({array});
+        count =0;
     }    
 }
 
@@ -74,6 +77,13 @@ router.post('/team/createTeam',(req,res,next)=>{
     });
 });
 
+router.get('/team/start', (req,res,next)=>{
+    var teamList = [];
+    teams.find({},{_id:1}).then((item)=>{
+        res.send(item);
+    })    
+})
 
+//finalTeam = [ [  {name: "Sanjeet" }], [  {name: "Raju" }]];
 module.exports = {router:router,
 finalTeam: finalTeam};
