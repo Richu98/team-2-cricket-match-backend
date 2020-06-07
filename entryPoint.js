@@ -10,9 +10,9 @@ useNewUrlParser: true, useFindAndModify: false}).then(() => console.log( 'Databa
 mongoose.Promise = global.Promise;
 
 app.use(bodyParser.json());
-app.use(require('./controller/routes/page1').router);
+app.use(require('./controller/routes/page1'));
 app.use('/stadium',abc);
 
-app.listen(process.env.PORT || 4000,()=>{
+app.listen(4000,()=>{
     console.log("now listening to requests...");
 });
