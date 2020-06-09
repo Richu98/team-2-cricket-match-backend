@@ -6,6 +6,14 @@ var selectedPlrs = [];
 var finalTeam = [];
 var callplrs = [];
 
+router.get('/team/start',(req, res, next)=>{
+    teams.find({},{teamName:1,_id:1}).then((item)=>{
+        res.send(item);
+    })
+
+
+})
+
 router.get('/team/getTeam/:teamId', (req, res, next) => {// player[name].
     teams.findById(req.params.teamId, (err, data) => {
         if (err) throw err;

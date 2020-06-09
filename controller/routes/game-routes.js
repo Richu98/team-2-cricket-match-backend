@@ -28,15 +28,11 @@ const findOneAndUpdatePromise = (query, update) => new Promise((resolve, reject)
 var total = 0; var total1 = 0; var total2 =0; 
 var nextIn = false; var scored = 0; var runs = 0
 
-router2.get('/bringTeam', (req,res,next)=>{
-    total = 0;
-    res.send(finalTeamFunc);
-});
 
 
 router2.put('/endFirstInnings',(req,res,next)=>{
     nextIn = true;
-    total1 = total;
+    total1 = total; res.send("done");
 });
 //_____
 function findPlyr(plyr){
@@ -75,20 +71,39 @@ router2.put('/matchUpdates/:plyr',(req, res, next)=>{
 });
 
 function closeMatch(array){
-    array.map((item)=>{
-        let filter = {players: {$elemMatch:{name: item.name}}}
-        let update = {"players.$.active":'true'}
-        teams.findOneAndUpdate(filter,update,(err,data)=>{
-            res.send(data);
-        });
-    });
+    console.log(array)
+    // array.map((item)=>{
+    //     let filter = {players: {$elemMatch:{name: item.name}}}
+    //     let update = {"players.$.active":'true'}
+    //     teams.findOneAndUpdate(filter,update,(err,data)=>{
+    //         res.send(data);
+    //     });
+    // });
 }
 
 router2.put('/endMatch',(req,res,next)=>{
-    closeMatch(finalTeam.team1);
-    closeMatch(finalTeam.team2);
-    res.send({team1Score: total1, team1Score: total2})
+    var selectedPlrs = req.body
+    total2 = total;
+    
+        for(var i = 0; i < 2; i++){
+            var subSelect = selectedPlrs[i];
+            subSelect.array.map((item)=>{
+            let filter = { players: { $elemMatch: { name: item.name } } }
+            let update = { "players.$.active": 'false'}
+            teams.findOneAndUpdate(filter, update, (err, data) => {
+                console.log("Player left");
+            });})
+        }
+    res.send({team1Score: total1 ,team2Score: total2 })
 });
-
+//__________________________________________________________________________
+router2.put('/test',(req,res,next)=>{
+    teams.findOne({teamName:'TeamA'}).then((item)=>{
+        console.log(item.players);
+        item.players.findOneAndUpdate({$elemMatch:{name: 'Bulla'}},{'$.scored': 69}).then();
+    })
+    res.send("ok");
+});
+//__________________________________________________________________________
   
 module.exports = router2;

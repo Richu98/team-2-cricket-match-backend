@@ -13,6 +13,6 @@ app.use(bodyParser.json());
 app.use(require('./controller/routes/page1'));
 app.use('/stadium',abc);
 
-app.listen(4000,()=>{
+app.listen(process.env.PORT || 4000,()=>{
     console.log("now listening to requests...");
 });
