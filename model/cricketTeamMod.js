@@ -8,21 +8,35 @@ const playerSchema = new Schema(
             type:String,
             required: [true,'name field is required']
         },
-        position:String,
+        position:{
+            type:String,
+            default: 'player'
+        },    
         scored:{
             type:Number,
             default: 0
         },
-        runs:Number,
-        active:Boolean
+        runs:{
+            type:Number,
+            default: 0
+        },    
+        active:{
+            type:Boolean,
+            default:'false'
+        }    
     }
 );
 
 const cricSchema = new Schema({ 
-     teamName:{
+    
+    teamName:{
         type:String,
         required: [true,'teamName field is required!']
     },
+    teamRuns:{
+        type:Number,
+        required:[true,'teamName field is required!']
+    }, 
     players: [playerSchema]
 });   
 
