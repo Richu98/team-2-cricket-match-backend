@@ -35,7 +35,7 @@ const cricSchema = new Schema({
     },
     teamRuns:{
         type:Number,
-        required:[true,'teamName field is required!']
+        default: 0
     }, 
     players: [playerSchema]
 });   
