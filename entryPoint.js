@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 var abc = require('./controller/routes/game-routes'); 
 
-mongoose.connect('mongodb+srv://Kabir_Sethi:mongokabirdb@cluster0-sh5xs.mongodb.net/cricketTeamDB?retryWrites=true&w=majority',{ useUnifiedTopology: true,
+mongoose.connect('mongodb+srv://Kabir_Sethi:mongokabirdb@cluster0-sh5xs.mongodb.net/cricketTeamDBS?retryWrites=true&w=majority',{ useUnifiedTopology: true,
 useNewUrlParser: true, useFindAndModify: false}).then(() => console.log( 'Database Connected' ))
 .catch(err => console.log( err ));
 mongoose.Promise = global.Promise;
