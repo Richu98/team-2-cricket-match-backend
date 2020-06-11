@@ -15,16 +15,18 @@ router.get('/team/start',(req, res, next)=>{
 })
 
 router.get('/team/getTeam/:teamId', (req, res, next) => {// player[name].
-    let tName = " ";
+    let tName = " "; let tRuns = 0;
     teams.findById(req.params.teamId, (err, data) => {
         if (err) throw err;
+        console.log(data);
         callplrs = []; 
         tName = data.teamName;
+        tRuns = data.teamRuns;
         data.players.map((item) => {
             callplrs.push({ 'name': item.name })
         });
         // res.send(data);
-        res.send({teamName: tName, team: callplrs });
+        res.send({teamName: tName, teamRuns: tRuns, team: callplrs });
     });
 });
 
